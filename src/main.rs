@@ -5,8 +5,10 @@ use tracing::info;
 async fn main() {
     use tokio::net::TcpListener;
 
+    // start logging info
     tracing_subscriber::fmt::init();
     info!("starting server");
+    info!("server running on port 3000");
 
     let app = Router::new().route("/", get(root));
 
