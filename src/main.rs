@@ -1,11 +1,21 @@
+/*
+docker run -d -p 5432:5432 --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword postgres
+my-postgres is the instance name
+password = mysecretpassword
+user = postgres
+
+to stop the container -> $docker stop my-postgres
+
+*/
+
 #![allow(unused)]
+use crate::web::hello_world;
 use anyhow::Result;
 use axum::{routing::get, Router};
 use sqlx::postgres::{PgPool, PgPoolOptions};
 use std::time::Duration;
 use tower_http::services::ServeDir;
 use tracing::info;
-use crate::web::hello_world;
 
 mod web;
 
@@ -20,19 +30,28 @@ async fn main() {
 
     // start logging info
     tracing_subscriber::fmt::init();
-    info!("starting server");
-    info!("server running on port 3000");
+    info!("starting server ✅ ");
+    info!("server running on port 3000 ✅");
 
     let db_connection_str = std::env::var("DATABASE_URL")
-        .unwrap_or_else(|_| "postgres://postgres:password@localhost".to_string());
+        .unwrap_or_else(|_| "postgres://postgres:mysecretpassword@localhost:5432".to_string());
 
     // set up connection pool
-    let pool = PgPoolOptions::new()
+    info!("Connect to Postgres");
+    let pool_result = PgPoolOptions::new()
         .max_connections(5)
-        .acquire_timeout(Duration::from_secs(3))
+        .acquire_timeout(Duration::from_secs(5))
         .connect(&db_connection_str)
-        .await
-        .expect("can't connect to database");
+        .await;
+
+    let pool = match pool_result {
+        Ok(pool) => pool,
+        Err(err) => {
+            eprintln!("❌ Error connecting to the database, 
+            (if using docker, start the container) : {}", err);
+            return;
+        }
+    };
 
     let service = ServeDir::new("assets");
 
