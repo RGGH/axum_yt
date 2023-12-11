@@ -11,4 +11,10 @@
     password = mysecretpassword
     user = postgres
 
-to stop the container -> $docker stop my-postgres
+##### To stop the container
+    docker stop my-postgres
+    
+#### YouTube Axum Playlist
+https://www.youtube.com/playlist?list=PL38rDfx7QwKZvyMBvhfMDH6AqdGc15-bE
+
+
