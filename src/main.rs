@@ -1,6 +1,14 @@
+#![allow(unused)]
+use sqlx::PgPool; // this is a Postgres connection pool
 use tower_http::services::ServeDir;
 use axum::{routing::get, Router};
 use tracing::info;
+
+#[derive(Clone)]
+struct AppState {
+    pool: PgPool,
+}
+
 
 #[tokio::main]
 async fn main() {
