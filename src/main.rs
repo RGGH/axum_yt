@@ -19,7 +19,7 @@ use tracing::info;
 
 mod web;
 
-#[derive(Clone)]
+#[derive(Clone,Debug)]
 struct AppState {
     pool: PgPool,
 }
@@ -52,6 +52,10 @@ async fn main() {
             return;
         }
     };
+
+    // Create an instance of the AppState with the test pool
+    let app_state = AppState { pool };
+    println!("{:?}", app_state);
 
     let service = ServeDir::new("assets");
 
