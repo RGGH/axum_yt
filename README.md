@@ -8,7 +8,7 @@
 
     docker run -d -p 5432:5432 --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword postgres
     
-- my-postgres = instance name
+- instance name = my-postgres
 - password = mysecretpassword
 - user = postgres
 
