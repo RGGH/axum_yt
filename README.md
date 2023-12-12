@@ -15,7 +15,6 @@ user = postgres
 
 docker stop my-postgres
 
-
 ##### Database Migrations with SQLx-CLI
 
 [https://codevoweb.com/rust-crud-api-example-with-axum-and-postgresql/](https://codevoweb.com/rust-crud-api-example-with-axum-and-postgresql/)
@@ -28,12 +27,11 @@ cargo add sqlx-cli
 sqlx migrate add -r init
 ```
 
+`Creating migrations/20231212144255_init.up.sql `
 
-Creating migrations/20231212144255_init.up.sql
-Creating migrations/20231212144255_init.down.sql
+`Creating migrations/20231212144255_init.down.sql`
 
-
-Congratulations on creating your first migration!
+`Congratulations on creating your first migration!`
 
 edit *migrations/20231212144255_init.up.sql*
 
@@ -47,8 +45,7 @@ Then...run sqlx migrate from project root as below:
 sqlx migrate run --database-url postgres://postgres:mysecretpassword@localhost:5432
 ```
 
-Applied 20231212144255/migrate init (54.673485ms)
-
+`Applied 20231212144255/migrate init (54.673485ms)`
 
 #### YouTube Axum Playlist
 
