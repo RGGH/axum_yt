@@ -6,7 +6,8 @@
 
 #### Docker (Postgres)
 
-docker run -d -p 5432:5432 --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword postgres
+    docker run -d -p 5432:5432 --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword postgres
+    
 - my-postgres = instance name
 - password = mysecretpassword
 - user = postgres
@@ -43,6 +44,30 @@ Then...run sqlx migrate from project root as below:
 sqlx migrate run --database-url postgres://postgres:mysecretpassword@localhost:5432
 ```
 `Applied 20231212144255/migrate init (54.673485ms)`
+
+---
+    ❯ sqlx migrate run --database-url postgres://postgres:mysecretpassword@localhost:5432
+   Applied 20231212144255/migrate init (585.645289ms)
+   ❯ psql -h localhost -p 5432 -U postgres
+   Password for user postgres: 
+   psql (14.9 (Ubuntu 14.9-0ubuntu0.22.04.1), server 16.0 (Debian 16.0-1.pgdg120+1))
+   WARNING: psql major version 14, server major version 16.
+            Some psql features might not work.
+   Type "help" for help.
+   
+   postgres=# \c
+   psql (14.9 (Ubuntu 14.9-0ubuntu0.22.04.1), server 16.0 (Debian 16.0-1.pgdg120+1))
+   WARNING: psql major version 14, server major version 16.
+            Some psql features might not work.
+   You are now connected to database "postgres" as user "postgres".
+   postgres=# \d
+                 List of relations
+    Schema |       Name       | Type  |  Owner   
+   --------+------------------+-------+----------
+    public | _sqlx_migrations | table | postgres
+    public | notes            | table | postgres
+   (2 rows)
+
 
 #### YouTube Axum Playlist
 
