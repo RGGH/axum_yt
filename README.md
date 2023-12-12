@@ -1,8 +1,6 @@
 # axum_yt
 
-### Axum project for YouTube
-
-![Alternative text](screenshot.png "title")
+## Axum project for YouTube
 
 ### Docker (Postgres)
 
