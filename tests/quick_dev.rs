@@ -15,4 +15,3 @@ async fn quick_dev_assets() -> Result<()> {
 
     Ok(())
 }
-

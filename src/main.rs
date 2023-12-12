@@ -10,8 +10,8 @@ to stop the container -> $docker stop my-postgres
 
 #![allow(unused)]
 use crate::web::hello_world;
-use anyhow::Result; 
-use axum::{Router, routing::get, extract::State};
+use anyhow::Result;
+use axum::{extract::State, routing::get, Router};
 use sqlx::postgres::{PgPool, PgPoolOptions};
 use std::time::Duration;
 use tower_http::services::ServeDir;
@@ -19,7 +19,7 @@ use tracing::info;
 
 mod web;
 
-#[derive(Clone,Debug)]
+#[derive(Clone, Debug)]
 struct AppState {
     pool: PgPool,
 }
@@ -33,7 +33,6 @@ async fn main() {
     info!("starting server ✅ ");
     info!("server running on port 3000 ✅");
     let db_connection_str = std::env::var("DATABASE_URL")
-
         .unwrap_or_else(|_| "postgres://postgres:mysecretpassword@localhost:5432".to_string());
 
     // set up connection pool
@@ -47,8 +46,11 @@ async fn main() {
     let pool = match pool_result {
         Ok(pool) => pool,
         Err(err) => {
-            eprintln!("❌ Error connecting to the database, 
-            (if using docker, start the container) : {}", err);
+            eprintln!(
+                "❌ Error connecting to the database, 
+            (if using docker, start the container) : {}",
+                err
+            );
             return;
         }
     };

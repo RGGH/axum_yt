@@ -1,16 +1,19 @@
-use axum::{response::{Response, IntoResponse}, Json};
-use serde::Serialize;
+use axum::{
+    response::{IntoResponse, Response},
+    Json,
+};
 use hyper::http::StatusCode;
+use serde::Serialize;
 
 #[derive(Serialize)]
 struct Message {
-    message : String
+    message: String,
 }
 
 enum ApiResponse {
     Ok,
     Created,
-    JsonData(Vec<Message>)
+    JsonData(Vec<Message>),
 }
 
 // // Implement IntoResponse for ApiResponse
