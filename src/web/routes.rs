@@ -33,11 +33,7 @@ enum ApiResponse {
 //     ApiResponse::Ok
 // }
 
-
-
 // Basic handler that responds with a static string
 pub async fn hello_world() -> &'static str {
-
-
     "Hello, world!"
 }

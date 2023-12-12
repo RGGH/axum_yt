@@ -15,6 +15,41 @@ user = postgres
 
 docker stop my-postgres
 
+
+##### Database Migrations with SQLx-CLI
+
+[https://codevoweb.com/rust-crud-api-example-with-axum-and-postgresql/](https://codevoweb.com/rust-crud-api-example-with-axum-and-postgresql/)
+
+```
+cargo add sqlx-cli
+```
+
+```
+sqlx migrate add -r init
+```
+
+
+Creating migrations/20231212144255_init.up.sql
+Creating migrations/20231212144255_init.down.sql
+
+
+Congratulations on creating your first migration!
+
+edit *migrations/20231212144255_init.up.sql*
+
+Add the code you can see in the "init up" file now that I have put the SQL in to create the notes table.
+
+(your init.up.sql will be empty when you first open it)
+
+Then...run sqlx migrate from project root as below:
+
+```
+sqlx migrate run --database-url postgres://postgres:mysecretpassword@localhost:5432
+```
+
+Applied 20231212144255/migrate init (54.673485ms)
+
+
 #### YouTube Axum Playlist
 
 https://www.youtube.com/playlist?list=PL38rDfx7QwKZvyMBvhfMDH6AqdGc15-bE
@@ -53,7 +88,6 @@ While using a struct for "app state" in Rust web frameworks shares similarities 
 ### TL,DR;
 
 Once you have the app state, you can use it to store and manage global application-level data, such as a database connection pool, configuration settings, or other shared resources, ensuring efficient and centralized access across your Rust application.
-
 
 > In most Rust web frameworks, Axum included, we use what is called "app state" - a struct dedicated to holding all of your variables that you want to share across your routes on the app. The only requirement to do this in Axum is that the struct needs to implement `Clone`
 >
