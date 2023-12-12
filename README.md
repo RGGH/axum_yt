@@ -6,11 +6,11 @@
 
 #### Docker (Postgres)
 
-    ```docker run -d -p 5432:5432 --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword postgres```
+    docker run -d -p 5432:5432 --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword postgres
     
-my-postgres is the instance name
-password = mysecretpassword
-user = postgres
+my-postgres is the instance name\n
+password = mysecretpassword\n
+user = postgres\n
 
 ##### To stop the container
 
