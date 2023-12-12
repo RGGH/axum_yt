@@ -10,8 +10,8 @@ to stop the container -> $docker stop my-postgres
 
 #![allow(unused)]
 use crate::web::hello_world;
-use anyhow::Result;
-use axum::{routing::get, Router};
+use anyhow::Result; 
+use axum::{Router, routing::get, extract::State};
 use sqlx::postgres::{PgPool, PgPoolOptions};
 use std::time::Duration;
 use tower_http::services::ServeDir;
@@ -61,7 +61,8 @@ async fn main() {
 
     let app = Router::new()
         .route("/", get(hello_world))
-        .nest_service("/assets", service);
+        .nest_service("/assets", service)
+        .with_state(app_state);
     // to test assets ~ visit -> http://localhost:3000/assets
 
     let listener = TcpListener::bind("0.0.0.0:3000").await.unwrap();
