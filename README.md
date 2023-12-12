@@ -8,9 +8,9 @@
 
     docker run -d -p 5432:5432 --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword postgres
     
-my-postgres is the instance name\n
-password = mysecretpassword\n
-user = postgres\n
+- my-postgres = instance name
+- password = mysecretpassword
+- user = postgres
 
 ##### To stop the container
 
