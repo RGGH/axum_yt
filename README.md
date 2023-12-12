@@ -6,8 +6,7 @@
 
 #### Docker (Postgres)
 
-    docker run -d -p 5432:5432 --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword postgres
-    
+docker run -d -p 5432:5432 --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword postgres
 - my-postgres = instance name
 - password = mysecretpassword
 - user = postgres
@@ -23,11 +22,9 @@ docker stop my-postgres
 ```
 cargo add sqlx-cli
 ```
-
 ```
 sqlx migrate add -r init
 ```
-
 `Creating migrations/20231212144255_init.up.sql `
 
 `Creating migrations/20231212144255_init.down.sql`
@@ -36,7 +33,7 @@ sqlx migrate add -r init
 
 edit *migrations/20231212144255_init.up.sql*
 
-Add the code you can see in the "init up" file now that I have put the SQL in to create the notes table.
+Add the code you can see in the "[init up](https://github.com/RGGH/axum_yt/blob/p5/migrations/20231212144255_init.up.sql)" file now that I have put the SQL in to create the notes table.
 
 (your init.up.sql will be empty when you first open it)
 
@@ -45,7 +42,6 @@ Then...run sqlx migrate from project root as below:
 ```
 sqlx migrate run --database-url postgres://postgres:mysecretpassword@localhost:5432
 ```
-
 `Applied 20231212144255/migrate init (54.673485ms)`
 
 #### YouTube Axum Playlist
