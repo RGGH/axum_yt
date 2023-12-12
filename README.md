@@ -4,7 +4,7 @@
 
 ![Alternative text](screenshot.png "title")
 
-#### Docker (Postgres)
+### Docker (Postgres)
 
     docker run -d -p 5432:5432 --name my-postgres -e POSTGRES_PASSWORD=mysecretpassword postgres
     
@@ -16,7 +16,7 @@
 
 docker stop my-postgres
 
-##### Database Migrations with SQLx-CLI
+#### Database Migrations with SQLx-CLI
 
 [https://codevoweb.com/rust-crud-api-example-with-axum-and-postgresql/](https://codevoweb.com/rust-crud-api-example-with-axum-and-postgresql/)
 
@@ -70,7 +70,7 @@ sqlx migrate run --database-url postgres://postgres:mysecretpassword@localhost:5
 
 ---
 
-#### YouTube Axum Playlist
+## YouTube Axum Playlist
 
 https://www.youtube.com/playlist?list=PL38rDfx7QwKZvyMBvhfMDH6AqdGc15-bE
 
