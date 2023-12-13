@@ -11,8 +11,8 @@ to stop the container -> $docker stop my-postgres
 #![allow(unused)]
 use crate::web::routes_comp;
 use anyhow::Result;
-use axum::{extract::State, routing::get, Router};
 use axum::response::Html;
+use axum::{extract::State, routing::get, Router};
 use sqlx::postgres::{PgPool, PgPoolOptions};
 use std::time::Duration;
 use tower_http::services::ServeDir;
