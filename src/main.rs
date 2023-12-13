@@ -6,6 +6,8 @@ user = postgres
 
 to stop the container -> $docker stop my-postgres
 
+set env for Postgres : 
+export DATABASE_URL=postgres://postgres:mysecretpassword@localhost:5432/postgres
 */
 
 #![allow(unused)]
@@ -36,10 +38,13 @@ async fn main() {
     info!("starting server ✅ ");
     info!("server running on port 3000 ✅");
     
-    // Create an instance of the AppState with the test pool
-    // let app_state = web::AppState{ pool };
+    /*
+    todo
+    Create an instance of the AppState with the test pool
+    let app_state = web::AppState{ pool };
+    */
   
-    // set directory for static
+    // set the directory for static
     let service = ServeDir::new("assets");
 
     let app = Router::new()
