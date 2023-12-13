@@ -1,10 +1,10 @@
-use axum::middleware;
 use axum::extract::State;
+use axum::middleware;
+use axum::response::Json as JsonResponse;
 use axum::response::Response;
+use axum::Json;
 use axum::{response::Html, routing::get, routing::post, Extension, Router};
 use hyper::http::StatusCode;
-use axum::Json;
-use axum::response::Json as JsonResponse;
 
 use serde::{Deserialize, Serialize};
 
@@ -17,7 +17,6 @@ pub struct Message {
 
 // 1st handler
 async fn handler_1() -> Html<&'static str> {
-    
     Html("<h1>API works!</h1>")
 }
 
@@ -27,7 +26,6 @@ async fn handler_2() -> Json<Message> {
         message: String::from("Hello, World JSON!"),
     })
 }
-
 
 // 3rd handler
 // Request and response JSON structs.
@@ -43,15 +41,22 @@ struct ResponseData {
     // Add fields as needed for your JSON response.
     greeting: String,
     // Example field, you can customize it according to your needs.
+    bitcoin: i32,
 }
 
 // Handler function for POST requests.
 async fn handler_3(Json(request_data): Json<RequestData>) -> JsonResponse<ResponseData> {
     // Process the request data and prepare the response.
-    let greeting = format!("Hello, {}!", request_data.name);
-    
+    let greeting = format!("Hello {}", request_data.name);
+
+    // Create the ResponseData with an additional bitcoin field.
+    let response_data = ResponseData {
+        greeting,
+        bitcoin: 11,
+    };
+
     // Create and return a JSON response.
-    JsonResponse(ResponseData { greeting })
+    JsonResponse(response_data)
 }
 
 //  make sure this is NOT Async !
@@ -59,5 +64,5 @@ pub fn routes_comp() -> Router {
     Router::new()
         .route("/hello1", get(handler_1))
         .route("/hello2", get(handler_2))
-        .route("/hello3",post(handler_3))
+        .route("/hello3", post(handler_3))
 }
