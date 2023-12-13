@@ -10,6 +10,7 @@ to stop the container -> $docker stop my-postgres
 
 #![allow(unused)]
 use crate::web::routes_comp;
+use crate::db::init_db_pool;
 use anyhow::Result;
 use axum::response::Html;
 use axum::{extract::State, routing::get, Router};
@@ -19,6 +20,7 @@ use tower_http::services::ServeDir;
 use tracing::info;
 
 mod web;
+mod db;
 
 #[derive(Clone, Debug)]
 struct AppState {
@@ -33,33 +35,10 @@ async fn main() {
     tracing_subscriber::fmt::init();
     info!("starting server ✅ ");
     info!("server running on port 3000 ✅");
-    let db_connection_str = std::env::var("DATABASE_URL")
-        .unwrap_or_else(|_| "postgres://postgres:mysecretpassword@localhost:5432".to_string());
-
-    // set up connection pool
-    info!("Connecting to Postgres");
-    let pool_result = PgPoolOptions::new()
-        .max_connections(5)
-        .acquire_timeout(Duration::from_secs(5))
-        .connect(&db_connection_str)
-        .await;
-
-    let pool = match pool_result {
-        Ok(pool) => pool,
-        Err(err) => {
-            eprintln!(
-                "❌ Error connecting to the database, 
-            (if using docker, start the container) : {}",
-                err
-            );
-            return;
-        }
-    };
-
+    
     // Create an instance of the AppState with the test pool
-    let app_state = AppState { pool };
-    println!("{:?}", app_state);
-
+    // let app_state = web::AppState{ pool };
+  
     // set directory for static
     let service = ServeDir::new("assets");
 

@@ -1,4 +1,7 @@
+use axum::body::Body;
+use axum::extract;
 use axum::extract::State;
+use axum::http;
 use axum::http::StatusCode;
 use axum::middleware;
 use axum::response::Json as JsonResponse;
@@ -6,10 +9,14 @@ use axum::response::Response;
 use axum::response::{IntoResponse, Json};
 use axum::{response::Html, routing::get, routing::post, Extension, Router};
 use serde_json::json;
-
 use serde::{Deserialize, Serialize};
+use crate::db::db_operation;
 
-use crate::AppState;
+
+use crate::web::AppState;
+use crate::db;
+
+
 
 #[derive(Serialize)]
 pub struct Message {
@@ -79,7 +86,29 @@ async fn handler_5() -> Result<impl IntoResponse, StatusCode> {
     Ok(StatusCode::CREATED)
 }
 
+//
+async fn test_db(state: extract::Extension<AppState>) -> http::Response<Body> {
+    // Access the database pool from the state
+    let pool = state.pool.clone();
 
+    // Use the pool in your database operations
+    let result = db_operation(&pool).await;
+
+    // Handle the result and build the response accordingly
+    match result {
+        Ok(data) => {
+            // Do something with the data
+            http::Response::new(Body::from(format!("Test data: {:?}", data)))
+        }
+        Err(err) => {
+            // Handle the error
+            http::Response::builder()
+                .status(http::StatusCode::INTERNAL_SERVER_ERROR)
+                .body(Body::from(format!("Error: {}", err)))
+                .unwrap()
+        }
+    }
+}
 
 //  make sure this is NOT Async !
 pub fn routes_comp() -> Router {
