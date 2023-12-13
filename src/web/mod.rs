@@ -1,2 +1,2 @@
 mod routes;
-pub use routes::hello_world;
+pub use routes::routes_comp;

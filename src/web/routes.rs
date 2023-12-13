@@ -1,42 +1,31 @@
-use axum::{
-    response::{IntoResponse, Response},
-    Json,
-};
+use axum::middleware;
+use axum::extract::State;
+use axum::response::{Json, Response};
+use axum::{response::Html, routing::get, routing::post, Extension, Router};
 use hyper::http::StatusCode;
 use serde::Serialize;
 
+use crate::AppState;
+
 #[derive(Serialize)]
-struct Message {
-    message: String,
+pub struct Message {
+    pub message: String,
 }
 
-enum ApiResponse {
-    Ok,
-    Created,
-    JsonData(Vec<Message>),
+async fn handler_1() -> Html<&'static str> {
+    
+    Html("<h1>API works!</h1>")
 }
 
-// // Implement IntoResponse for ApiResponse
-// impl IntoResponse for ApiResponse {
-//     fn into_response(self) -> Response {
-//         match self {
-//             ApiResponse::OK => Response::new(StatusCode::OK),
-//             ApiResponse::Created => Response::new(StatusCode::CREATED),
-//             ApiResponse::JsonData(data) => Response::new(StatusCode::OK)
-//                 .set_header("Content-Type", "application/json")
-//                 .set_body(data),
-//         }
-//     }
-// }
+async fn handler_2() -> Json<Message> {
+    Json(Message {
+        message: String::from("Hello, World JSON!"),
+    })
+}
 
-// async fn handler() -> ApiResponse {
-//     // Your logic here to determine the appropriate response variant
-
-//     // For this example, always return ApiResponse::Ok
-//     ApiResponse::Ok
-// }
-
-// Basic handler that responds with a static string
-pub async fn hello_world() -> &'static str {
-    "Hello, world!"
+//  make sure this is NOT Async !
+pub fn routes_comp() -> Router {
+    Router::new()
+        .route("/hello", get(handler_1))
+        .route("/hello2", get(handler_2))
 }
